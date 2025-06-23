@@ -1,8 +1,12 @@
-import { Route, Routes } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import "./App.css";
 import Home from "./pages/Home";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import { lazy, Suspense } from "react";
+import { PageSkeleton } from "./components/skeletons/PageSkeleton";
+
+const CheckoutPage = lazy(() => import("./pages/CheckoutPage"));
 
 // import { CheckoutProvider } from "@stripe/react-stripe-js";
 // import { loadStripe } from "@stripe/stripe-js";
@@ -24,24 +28,33 @@ import Cancel from "./pages/Cancel";
 //       }
 //     );
 // };
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/checkout",
+    element: (
+      <Suspense fallback={<PageSkeleton />}>
+        <CheckoutPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/success",
+    element: <Success />,
+  },
+  {
+    path: "/cancel",
+    element: <Cancel />,
+  },
+]);
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-          loader={async ({ context, params, request }) => {
-            console.log(context, params, request);
-          }}
-        />
-        <Route path="/success" element={<Success />} />
-        <Route path="/cancel" element={<Cancel />} />
-        {/* <CheckoutProvider stripe={stripePromise} options={{ fetchClientSecret }}>
-        <CheckoutForm />
-        </CheckoutProvider> */}
-      </Routes>
+      <RouterProvider router={router} />
     </>
   );
 }
