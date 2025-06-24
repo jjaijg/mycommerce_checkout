@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export const handler: Handler = async () => {
   try {
     const session = await stripe.checkout.sessions.create({
-        ui_mode: "custom",
+      ui_mode: "custom",
       //   payment_method_types: ["card"],
       mode: "payment",
       line_items: [
@@ -31,7 +31,8 @@ export const handler: Handler = async () => {
           quantity: 2,
         },
       ],
-      return_url: `${process.env.APP_URL}/checkout-form?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${process.env.APP_URL}/success`,
+      // return_url: `${process.env.APP_URL}/checkout-form?session_id={CHECKOUT_SESSION_ID}`,
       // success_url: `${process.env.APP_URL}/success`,
       // cancel_url: `${process.env.APP_URL}/cancel`,
     });
@@ -47,9 +48,10 @@ export const handler: Handler = async () => {
       }),
     };
   } catch (error) {
+    console.log(error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: (error as Error).message }),
+      body: JSON.stringify({ error: "Something went wrong" }),
     };
   }
 };

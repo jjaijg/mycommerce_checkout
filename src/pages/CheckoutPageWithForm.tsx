@@ -8,27 +8,25 @@ import { useParams } from "react-router-dom";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY!);
 
 const fetchClientSecret = async () => {
-	return fetch("/.netlify/functions/create-checkout-session-return", {
-		method: "POST",
-	})
-		.then((response) => response.json())
-		.then(
-			(json: { id: string; payment_status: string; client_secret: string }) => {
-				console.log(json);
-				return json.client_secret;
-			}
-		);
+  return fetch("/.netlify/functions/create-checkout-session-return", {
+    method: "POST",
+  })
+    .then((response) => response.json())
+    .then(
+      (json: { id: string; payment_status: string; client_secret: string }) => {
+        return json.client_secret;
+      }
+    );
 };
 
 const CheckoutPageWithForm = () => {
-	const params = useParams()
-	console.log(params)
-	return (
-		<CheckoutProvider stripe={stripePromise} options={{ fetchClientSecret }}>
-			<CheckoutForm />
-		</CheckoutProvider>
-	)
-}
-
+  const params = useParams();
+  console.log(params);
+  return (
+    <CheckoutProvider stripe={stripePromise} options={{ fetchClientSecret }}>
+      <CheckoutForm />
+    </CheckoutProvider>
+  );
+};
 
 export default CheckoutPageWithForm;

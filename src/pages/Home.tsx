@@ -36,7 +36,6 @@ const Home = () => {
       <section>
         <Captcha value={value} onChange={onCaptchaChange} />
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-
           <button
             onClick={() => {
               navigate("/checkout");
