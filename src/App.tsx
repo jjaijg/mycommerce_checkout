@@ -7,27 +7,8 @@ import { lazy, Suspense } from "react";
 import { PageSkeleton } from "./components/skeletons/PageSkeleton";
 
 const CheckoutPage = lazy(() => import("./pages/CheckoutPage"));
+const CheckoutFormPage = lazy(() => import("./pages/CheckoutPageWithForm"));
 
-// import { CheckoutProvider } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
-// import CheckoutForm from "./components/CheckoutForm";
-
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-// const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY!);
-
-// const fetchClientSecret = async () => {
-//   return fetch("/.netlify/functions/create-checkout-session", {
-//     method: "POST",
-//   })
-//     .then((response) => response.json())
-//     .then(
-//       (json: { id: string; payment_status: string; client_secret: string }) => {
-//         console.log(json);
-//         return json.client_secret;
-//       }
-//     );
-// };
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +19,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<PageSkeleton />}>
         <CheckoutPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/checkout-form",
+    element: (
+      <Suspense fallback={<PageSkeleton />}>
+        <CheckoutFormPage />
       </Suspense>
     ),
   },

@@ -35,13 +35,22 @@ const Home = () => {
     <main>
       <section>
         <Captcha value={value} onChange={onCaptchaChange} />
-        <button
-          onClick={() => {
-            navigate("/checkout");
-          }}
-        >
-          Proceed to Checkout
-        </button>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <button
+            onClick={() => {
+              navigate("/checkout");
+            }}
+          >
+            Proceed to Checkout
+          </button>
+          <button
+            onClick={() => {
+              navigate("/checkout-form");
+            }}
+          >
+            Proceed to Checkout Form
+          </button>
+        </div>
       </section>
     </main>
   );
